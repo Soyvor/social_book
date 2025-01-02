@@ -5,3 +5,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('book/', include('book.urls')),  # This includes the book app's URLs
 ]
+

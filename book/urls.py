@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.login, name='login'),
+    path('dashboard/', views.login, name='dashboard'),
+    
 ]
 
 # Custom error handlers
