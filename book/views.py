@@ -2,6 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from book.models import CustomUser
+
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -97,3 +99,168 @@ def error_503(request):
     return render(request, 'errors/503.html', status=503)
 
 
+from django.shortcuts import render
+
+# Example for the first few HTML files
+def advanced_components_view(request):
+    return render(request, 'book/advanced-components.html')
+
+def apexcharts_view(request):
+    return render(request, 'book/apexcharts.html')
+
+def basic_table_view(request):
+    # Filter users who have opted for public visibility
+    users = CustomUser.objects.filter(public_visibility=True)
+
+    # Render the 'basic-table.html' template with the filtered users
+    return render(request, 'book/basic-table.html', {'users': users})
+
+def blank_view(request):
+    return render(request, 'book/blank.html')
+
+def blog_detail_view(request):
+    return render(request, 'book/blog-detail.html')
+
+def blog_view(request):
+    return render(request, 'book/blog.html')
+
+def calendar_view(request):
+    return render(request, 'book/calendar.html')
+
+def chat_view(request):
+    return render(request, 'book/chat.html')
+
+def color_settings_view(request):
+    return render(request, 'book/color-settings.html')
+
+def contact_directory_view(request):
+    return render(request, 'book/contact-directory.html')
+
+def custom_icon_view(request):
+    return render(request, 'book/custom-icon.html')
+
+def datatable_view(request):
+    return render(request, 'book/datatable.html')
+
+def faq_view(request):
+    return render(request, 'book/faq.html')
+
+def font_awesome_view(request):
+    return render(request, 'book/font-awesome.html')
+
+def forgot_password_view(request):
+    return render(request, 'book/forgot-password.html')
+
+def form_basic_view(request):
+    return render(request, 'book/form-basic.html')
+
+def form_pickers_view(request):
+    return render(request, 'book/form-pickers.html')
+
+def form_wizard_view(request):
+    return render(request, 'book/form-wizard.html')
+
+def foundation_view(request):
+    return render(request, 'book/foundation.html')
+
+def gallery_view(request):
+    return render(request, 'book/gallery.html')
+
+def getting_started_view(request):
+    return render(request, 'book/getting-started.html')
+
+def highchart_view(request):
+    return render(request, 'book/highchart.html')
+
+def html5_editor_view(request):
+    return render(request, 'book/html5-editor.html')
+
+def image_cropper_view(request):
+    return render(request, 'book/image-cropper.html')
+
+def image_dropzone_view(request):
+    return render(request, 'book/image-dropzone.html')
+
+def index_view(request):
+    return render(request, 'book/index.html')
+
+def index2_view(request):
+    return render(request, 'book/index2.html')
+
+def introduction_view(request):
+    return render(request, 'book/introduction.html')
+
+def invoice_view(request):
+    return render(request, 'book/invoice.html')
+
+def ionicons_view(request):
+    return render(request, 'book/ionicons.html')
+
+def pricing_table_view(request):
+    return render(request, 'book/pricing-table.html')
+
+def product_detail_view(request):
+    return render(request, 'book/product-detail.html')
+
+def product_view(request):
+    return render(request, 'book/product.html')
+
+def profile_view(request):
+    return render(request, 'book/profile.html')
+
+def reset_password_view(request):
+    return render(request, 'book/reset-password.html')
+
+def sitemap_view(request):
+    return render(request, 'book/sitemap.html')
+
+def themify_view(request):
+    return render(request, 'book/themify.html')
+
+def third_party_plugins_view(request):
+    return render(request, 'book/third-party-plugins.html')
+
+def ui_buttons_view(request):
+    return render(request, 'book/ui-buttons.html')
+
+def ui_cards_hover_view(request):
+    return render(request, 'book/ui-cards-hover.html')
+
+def ui_cards_view(request):
+    return render(request, 'book/ui-cards.html')
+
+def ui_carousel_view(request):
+    return render(request, 'book/ui-carousel.html')
+
+def ui_list_group_view(request):
+    return render(request, 'book/ui-list-group.html')
+
+def ui_modals_view(request):
+    return render(request, 'book/ui-modals.html')
+
+def ui_notification_view(request):
+    return render(request, 'book/ui-notification.html')
+
+def ui_progressbar_view(request):
+    return render(request, 'book/ui-progressbar.html')
+
+def ui_range_slider_view(request):
+    return render(request, 'book/ui-range-slider.html')
+
+def ui_sweet_alert_view(request):
+    return render(request, 'book/ui-sweet-alert.html')
+
+def ui_tabs_view(request):
+    return render(request, 'book/ui-tabs.html')
+
+def ui_timeline_view(request):
+    return render(request, 'book/ui-timeline.html')
+
+def ui_tooltip_popover_view(request):
+    return render(request, 'book/ui-tooltip-popover.html')
+
+def ui_typography_view(request):
+    return render(request, 'book/ui-typography.html')
+
+def video_player_view(request):
+    return render(request, 'book/video-player.html')

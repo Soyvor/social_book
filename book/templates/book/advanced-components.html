@@ -478,7 +478,7 @@
 
     <div class="left-side-bar">
       <div class="brand-logo">
-        <a href="index.html">
+        <a href="{% url 'dashboard' %}">
           <img
             src="{% static 'vendors/images/deskapp-logo.svg' %}"
             alt=""
@@ -503,7 +503,7 @@
                 ><span class="mtext">Home</span>
               </a>
               <ul class="submenu">
-                <li><a href="index.html">Dashboard style 1</a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard style 1</a></li>
                 <li><a href="index2.html">Dashboard style 2</a></li>
               </ul>
             </li>
@@ -729,7 +729,7 @@
                 <nav aria-label="breadcrumb" role="navigation">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                      <a href="index.html">Home</a>
+                      <a href="{% url 'dashboard' %}">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                       Advanced Components
