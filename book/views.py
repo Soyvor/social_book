@@ -3,8 +3,30 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from book.models import CustomUser
+from django.http import HttpResponse  
+from book.functions.functions import handle_uploaded_file  
+from .models import UploadedFile
+from .form import UploadedFileForm
 
-
+def index(request):
+    if request.method == 'POST':
+        form = UploadedFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Save file and metadata to the database
+            uploaded_file = UploadedFile(
+                title=form.cleaned_data['title'],
+                description=form.cleaned_data['description'],
+                visibility=form.cleaned_data['visibility'],
+                cost=form.cleaned_data['cost'],
+                year_published=form.cleaned_data['year_published'],
+                file=request.FILES['file']
+            )
+            uploaded_file.save()
+            return HttpResponse("File uploaded successfully with metadata!")
+    else:
+        form = UploadedFileForm()
+    return render(request, "book/apexcharts.html", {'form': form})
+    
 def login_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('/dashboard/')  # Redirect to the dashboard if already logged in

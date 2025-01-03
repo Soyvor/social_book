@@ -14,3 +14,9 @@ class CustomUserAdmin(UserAdmin):
     )
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+from django.contrib import admin
+from .models import UploadedFile
+
+admin.site.register(UploadedFile)
