@@ -95,3 +95,5 @@ def error_500(request):
 
 def error_503(request):
     return render(request, 'errors/503.html', status=503)
+
+
