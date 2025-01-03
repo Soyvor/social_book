@@ -3,6 +3,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('book/', include('book.urls')),  # This includes the book app's URLs
+    path('book/', include('book.urls')),
 ]
+
+
 
