@@ -1,86 +1,131 @@
 {% load static %}
 <html>
-  <head></head>
-  <body>
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-
-      <!-- Title Input -->
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          class="form-control"
-          placeholder="Enter Title"
-          required=""
-        />
+  <head>
+    <meta charset="utf-8" />
+    <title>Upload Form</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'vendors/images/apple-touch-icon.png' %}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'vendors/images/favicon-32x32.png' %}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'vendors/images/favicon-16x16.png' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/styles/core.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/styles/icon-font.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/styles/style.css' %}" />
+  </head>
+  <body class="login-page">
+    <div class="login-header box-shadow">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <div class="brand-logo">
+          <a href="{% url 'login' %}">
+            <img src="{% static 'vendors/images/deskapp-logo.svg' %}" alt="" />
+          </a>
+        </div>
+        <div class="login-menu">
+          <ul>
+            <li><a href="{% url 'register' %}">Register</a></li>
+          </ul>
+        </div>
       </div>
+    </div>
+    <div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6 col-lg-7">
+            <img src="{% static 'vendors/images/login-page-img.png' %}" alt="" />
+          </div>
+          <div class="col-md-6 col-lg-5">
+            <div class="login-box bg-white box-shadow border-radius-10">
+              <div class="login-title">
+                <h2 class="text-center text-primary">Upload Form</h2>
+              </div>
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
 
-      <!-- Description Textarea -->
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea
-          id="description"
-          name="description"
-          class="form-control"
-          placeholder="Enter Description"
-        ></textarea>
+                <!-- Title Input -->
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    class="form-control form-control-lg"
+                    placeholder="Enter Title"
+                    required=""
+                    style="height: calc(2.4rem + 2px);" />
+                </div>
+
+                <!-- Description Textarea -->
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    class="form-control form-control-lg"
+                    placeholder="Enter Description"
+                    style="height: calc(3.2rem + 2px);"></textarea>
+                </div>
+
+                <!-- Public Visibility Checkbox -->
+                <div class="form-group" style="display: flex; align-items: center;">
+                  <label for="visibility" style="margin-right: 8px;">Public Visibility</label>
+                  <input
+                    type="checkbox"
+                    id="visibility"
+                    name="visibility"
+                    class="form-control"
+                    style="width: 16px; height: 16px; margin-top: 0;" />
+                </div>
+
+                <!-- Cost Input -->
+                <div class="form-group">
+                  <label for="cost">Cost</label>
+                  <input
+                    type="number"
+                    id="cost"
+                    name="cost"
+                    class="form-control form-control-lg"
+                    placeholder="Enter Cost"
+                    step="0.01"
+                    style="height: calc(2.4rem + 2px);" />
+                </div>
+
+                <!-- Year Published Input -->
+                <div class="form-group">
+                  <label for="year_published">Year of Publication</label>
+                  <input
+                    type="number"
+                    id="year_published"
+                    name="year_published"
+                    class="form-control form-control-lg"
+                    placeholder="Enter Year of Publication"
+                    style="height: calc(2.4rem + 2px);" />
+                </div>
+
+                <!-- File Upload Input -->
+                <div class="form-group">
+                  <label for="file">Upload File</label>
+                  <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    class="form-control"
+                    required=""
+                    style="height: calc(2.4rem + 2px);" />
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                  Upload
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <!-- Public Visibility Checkbox -->
-      <div class="form-group">
-        <label for="visibility">Public Visibility</label>
-        <input
-          type="checkbox"
-          id="visibility"
-          name="visibility"
-          class="form-control"
-        />
-      </div>
-
-      <!-- Cost Input -->
-      <div class="form-group">
-        <label for="cost">Cost</label>
-        <input
-          type="number"
-          id="cost"
-          name="cost"
-          class="form-control"
-          placeholder="Enter Cost"
-          step="0.01"
-        />
-      </div>
-
-      <!-- Year Published Input -->
-      <div class="form-group">
-        <label for="year_published">Year of Publication</label>
-        <input
-          type="number"
-          id="year_published"
-          name="year_published"
-          class="form-control"
-          placeholder="Enter Year of Publication"
-        />
-      </div>
-
-      <!-- File Upload Input -->
-      <div class="form-group">
-        <label for="file">Upload File</label>
-        <input
-          type="file"
-          id="file"
-          name="file"
-          class="form-control"
-          required=""
-        />
-      </div>
-
-      <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary btn-lg btn-block">
-        Upload
-      </button>
-    </form>
+    </div>
+    <script src="{% static 'vendors/scripts/core.js' %}"></script>
+    <script src="{% static 'vendors/scripts/script.min.js' %}"></script>
+    <script src="{% static 'vendors/scripts/process.js' %}"></script>
+    <script src="{% static 'vendors/scripts/layout-settings.js' %}"></script>
   </body>
 </html>

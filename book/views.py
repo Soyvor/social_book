@@ -7,6 +7,9 @@ from django.http import HttpResponse
 from book.functions.functions import handle_uploaded_file  
 from .models import UploadedFile
 from .form import UploadedFileForm
+from django.http import JsonResponse
+from .utils.db_operations import fetch_data
+
 
 def index(request):
     if request.method == 'POST':
@@ -37,7 +40,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirec('/')  # Redirect to the dashboard (root URL)
+            return HttpResponseRedirect('/')  # Redirect to the dashboard (root URL)
         else:
             messages.error(request, "Invalid username or password.")
     return render(request, 'login.html')
@@ -89,6 +92,10 @@ def register_view(request):
 
     return render(request, 'register.html')
 
+
+def fetch_data_view(request):
+    data = fetch_data()
+    return HttpResponse('Data fetched')
 
 
 # Logout view

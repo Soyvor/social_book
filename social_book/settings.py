@@ -80,10 +80,15 @@ WSGI_APPLICATION = 'social_book.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'your_db_name',  # Replace with your database name
+        'USER': 'postgres',      # Default user
+        'PASSWORD': 'your_password',  # Replace with the password you chose
+        'HOST': 'localhost',
+        'PORT': '5432',          # Default port for PostgreSQL
     }
 }
+
 
 
 # Password validation
@@ -130,3 +135,9 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'book.CustomUser'
+
+# settings.py
+
+MEDIA_URL = '/uploads/'  # URL path to access uploaded media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')  # The filesystem path to store uploaded files
+
