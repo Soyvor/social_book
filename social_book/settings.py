@@ -81,13 +81,14 @@ WSGI_APPLICATION = 'social_book.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'your_db_name',  # Replace with your database name
+        'NAME': 'social_book',  # Replace with your database name
         'USER': 'postgres',      # Default user
-        'PASSWORD': 'your_password',  # Replace with the password you chose
+        'PASSWORD': 'root',  # Replace with the password you chose
         'HOST': 'localhost',
         'PORT': '5432',          # Default port for PostgreSQL
     }
 }
+
 
 
 

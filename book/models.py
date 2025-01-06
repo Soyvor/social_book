@@ -20,7 +20,14 @@ class CustomUser(AbstractUser):
 
 
 class UploadedFile(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)  # Link to the user who uploaded the file
+    user = models.ForeignKey(
+        
+        settings.AUTH_USER_MODEL,  # Reference the custom user model
+        on_delete=models.CASCADE,  # Delete files if the user is deleted
+        related_name='uploaded_files'  # Optional: for reverse relations
+        
+    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1) 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     visibility = models.BooleanField(default=True)
