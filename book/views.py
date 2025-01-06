@@ -9,6 +9,29 @@ from .models import UploadedFile
 from .form import UploadedFileForm
 from django.http import JsonResponse
 from .utils.db_operations import fetch_data
+import logging
+from django.contrib.auth.hashers import make_password
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.http import JsonResponse
+from rest_framework import viewsets
+from django.contrib.auth.models import User
+from rest_framework.serializers import ModelSerializer
+from rest_framework.permissions import IsAuthenticated
+from .models import CustomUser
+
+
+# Serializer for User model
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+
+# Viewset for User
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer  # Assuming you have a serializer named UserSerializer
+
+
 
 
 def index(request):
@@ -32,7 +55,7 @@ def index(request):
     
 def login_view(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect('/dashboard/')  # Redirect to the dashboard if already logged in
+        return render(request, 'login.html')  # Directly render the index.html if the user is logged in
 
     if request.method == "POST":
         username = request.POST.get('username')
@@ -40,10 +63,13 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/')  # Redirect to the dashboard (root URL)
+            return render(request, 'index.html')  # Render the index.html after successful login
         else:
             messages.error(request, "Invalid username or password.")
     return render(request, 'login.html')
+
+
+logger = logging.getLogger(__name__)
 
 def register_view(request):
     if request.method == "POST":
@@ -57,6 +83,9 @@ def register_view(request):
         gender = request.POST.get("gender")
         city = request.POST.get("city")
         state = request.POST.get("state")
+
+        # Log registration details for debugging
+        logger.debug(f'Username: {username}, Email: {email}, First Name: {first_name}, Last Name: {last_name}')
 
         # Helper functions for derived fields
         def get_location(city, state):
@@ -74,7 +103,7 @@ def register_view(request):
             email=email,
             first_name=first_name,
             last_name=last_name,
-            password=password,  # Ensure proper hashing
+            password=make_password(password),  # Ensure password is hashed
             dob=dob,
             gender=gender,
             city=city,
@@ -83,13 +112,23 @@ def register_view(request):
             birth_year=birth_year,
             public_visibility=public_visibility,
         )
+        
         try:
             user.save()
-            messages.success(request, "Account created successfully! Please log in.")
-            return HttpResponseRedirect('/book/login/')  # Redirect to login page after successful registration
-        except Exception as e:
-            messages.error(request, f"Error creating account: {str(e)}")
 
+            # Create JWT token after successful registration
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+
+            # Optionally send the token to the user or store it in response
+            response = JsonResponse({
+                "message": "Account created successfully! Please log in.",
+                "access_token": access_token,
+            })
+            return response
+        except Exception as e:
+            logger.error(f"Error creating account: {str(e)}")
+            messages.error(request, f"Error creating account: {str(e)}")
     return render(request, 'register.html')
 
 
@@ -144,152 +183,3 @@ def basic_table_view(request):
     # Render the 'basic-table.html' template with the filtered users
     return render(request, 'book/basic-table.html', {'users': users})
 
-def blank_view(request):
-    return render(request, 'book/blank.html')
-
-def blog_detail_view(request):
-    return render(request, 'book/blog-detail.html')
-
-def blog_view(request):
-    return render(request, 'book/blog.html')
-
-def calendar_view(request):
-    return render(request, 'book/calendar.html')
-
-def chat_view(request):
-    return render(request, 'book/chat.html')
-
-def color_settings_view(request):
-    return render(request, 'book/color-settings.html')
-
-def contact_directory_view(request):
-    return render(request, 'book/contact-directory.html')
-
-def custom_icon_view(request):
-    return render(request, 'book/custom-icon.html')
-
-def datatable_view(request):
-    return render(request, 'book/datatable.html')
-
-def faq_view(request):
-    return render(request, 'book/faq.html')
-
-def font_awesome_view(request):
-    return render(request, 'book/font-awesome.html')
-
-def forgot_password_view(request):
-    return render(request, 'book/forgot-password.html')
-
-def form_basic_view(request):
-    return render(request, 'book/form-basic.html')
-
-def form_pickers_view(request):
-    return render(request, 'book/form-pickers.html')
-
-def form_wizard_view(request):
-    return render(request, 'book/form-wizard.html')
-
-def foundation_view(request):
-    return render(request, 'book/foundation.html')
-
-def gallery_view(request):
-    return render(request, 'book/gallery.html')
-
-def getting_started_view(request):
-    return render(request, 'book/getting-started.html')
-
-def highchart_view(request):
-    return render(request, 'book/highchart.html')
-
-def html5_editor_view(request):
-    return render(request, 'book/html5-editor.html')
-
-def image_cropper_view(request):
-    return render(request, 'book/image-cropper.html')
-
-def image_dropzone_view(request):
-    return render(request, 'book/image-dropzone.html')
-
-def index_view(request):
-    return render(request, 'book/index.html')
-
-def index2_view(request):
-    return render(request, 'book/index2.html')
-
-def introduction_view(request):
-    return render(request, 'book/introduction.html')
-
-def invoice_view(request):
-    return render(request, 'book/invoice.html')
-
-def ionicons_view(request):
-    return render(request, 'book/ionicons.html')
-
-def pricing_table_view(request):
-    return render(request, 'book/pricing-table.html')
-
-def product_detail_view(request):
-    return render(request, 'book/product-detail.html')
-
-def product_view(request):
-    return render(request, 'book/product.html')
-
-def profile_view(request):
-    return render(request, 'book/profile.html')
-
-def reset_password_view(request):
-    return render(request, 'book/reset-password.html')
-
-def sitemap_view(request):
-    return render(request, 'book/sitemap.html')
-
-def themify_view(request):
-    return render(request, 'book/themify.html')
-
-def third_party_plugins_view(request):
-    return render(request, 'book/third-party-plugins.html')
-
-def ui_buttons_view(request):
-    return render(request, 'book/ui-buttons.html')
-
-def ui_cards_hover_view(request):
-    return render(request, 'book/ui-cards-hover.html')
-
-def ui_cards_view(request):
-    return render(request, 'book/ui-cards.html')
-
-def ui_carousel_view(request):
-    return render(request, 'book/ui-carousel.html')
-
-def ui_list_group_view(request):
-    return render(request, 'book/ui-list-group.html')
-
-def ui_modals_view(request):
-    return render(request, 'book/ui-modals.html')
-
-def ui_notification_view(request):
-    return render(request, 'book/ui-notification.html')
-
-def ui_progressbar_view(request):
-    return render(request, 'book/ui-progressbar.html')
-
-def ui_range_slider_view(request):
-    return render(request, 'book/ui-range-slider.html')
-
-def ui_sweet_alert_view(request):
-    return render(request, 'book/ui-sweet-alert.html')
-
-def ui_tabs_view(request):
-    return render(request, 'book/ui-tabs.html')
-
-def ui_timeline_view(request):
-    return render(request, 'book/ui-timeline.html')
-
-def ui_tooltip_popover_view(request):
-    return render(request, 'book/ui-tooltip-popover.html')
-
-def ui_typography_view(request):
-    return render(request, 'book/ui-typography.html')
-
-def video_player_view(request):
-    return render(request, 'book/video-player.html')

@@ -39,7 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'book',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,11 +90,11 @@ WSGI_APPLICATION = 'social_book.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'social_book',  # Replace with your database name
-        'USER': 'postgres',      # Default user
-        'PASSWORD': 'root',  # Replace with the password you chose
+        'NAME': 'social_book', 
+        'USER': 'postgres',  
+        'PASSWORD': 'root', 
         'HOST': 'localhost',
-        'PORT': '5432',          # Default port for PostgreSQL
+        'PORT': '5432',  
     }
 }
 
@@ -137,8 +146,28 @@ STATIC_ROOT = BASE_DIR / 'static'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'book.CustomUser'
 
+
 # settings.py
 
 MEDIA_URL = '/uploads/'  # URL path to access uploaded media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')  # The filesystem path to store uploaded files
 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
