@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'book',
+    'bookstore',
     'rest_framework',
     'rest_framework_simplejwt',
     
@@ -144,7 +144,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'book.CustomUser'
+AUTH_USER_MODEL = 'bookstore.CustomUser'
 
 
 # settings.py
@@ -171,3 +171,10 @@ LOGGING = {
         },
     },
 }
+
+
+# settings.py
+
+# Add these lines to handle media files
+MEDIA_URL = '/media/'  # URL to access media files
+MEDIA_ROOT = BASE_DIR / 'media'  # Folder where uploaded files will be stored
